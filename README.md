@@ -16,10 +16,6 @@ pip install dlib
 python main.py
 ```
 
-## What To Expect
-![Eying Left and Facing Center](./img/eye_left_face_center.png)
-
-
 ## References
 For facial landmark points visit [OpenFace API Doc](https://openface-api.readthedocs.io/en/latest/openface.html).
 For PySource Tutorial visit [Gaze controlled keyboard with Opencv and Python YouTube Playlist](https://www.youtube.com/playlist?list=PL6Yc5OUgcoTlvHb5OfFLUJ90ofBuoU5g8).
