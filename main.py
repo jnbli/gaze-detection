@@ -4,7 +4,7 @@
 import cv2
 import numpy as np
 import dlib
-from math import hypot
+from math import hypot, sqrt
 
 cap = cv2.VideoCapture(0)
 
@@ -82,6 +82,11 @@ while True:
 
 		landmarks = predictor(gray, face)
 
+		# for landmark_pt in range(0, 68):
+		# 	x = landmarks.part(landmark_pt).x
+		# 	y = landmarks.part(landmark_pt).y
+		# 	cv2.circle(frame, (x, y), 3, (0, 0, 255), 2)
+
 		# Detect Blinking
 		left_eye_ratio = get_blinking_ratio([36, 37, 38, 39, 40, 41], landmarks)
 		right_eye_ratio = get_blinking_ratio([42, 43, 44, 45, 46, 47], landmarks)
@@ -98,14 +103,32 @@ while True:
 
 		gaze_ratio = (gaze_ratio_left_eye + gaze_ratio_right_eye) / 2
 
+		
+		if gaze_ratio < 0.6:
+			cv2.putText(frame, "EYING LEFT", (50, 100), font, 2, (0, 0, 255), 3)
+		elif 0.6 <= gaze_ratio and gaze_ratio <= 1.6:
+			cv2.putText(frame, "EYING CENTER", (50, 100), font, 2, (0, 0, 255), 3)
+		elif gaze_ratio > 1.6:
+			cv2.putText(frame, "EYING RIGHT", (50, 100), font, 2, (0, 0, 255), 3)
+
 		cv2.putText(frame, str(gaze_ratio), (50, 200), font, 2, (0, 0, 255), 3)
 
-		if gaze_ratio < 0.6:
-			cv2.putText(frame, "LEFT", (50, 100), font, 2, (0, 0, 255), 3)
-		elif 0.6 <= gaze_ratio and gaze_ratio <= 2.2:
-			cv2.putText(frame, "CENTER", (50, 100), font, 2, (0, 0, 255), 3)
-		elif gaze_ratio > 2.2:
-			cv2.putText(frame, "RIGHT", (50, 100), font, 2, (0, 0, 255), 3)
+
+		nose_tip_mark = landmarks.part(30)
+		left_cheek_mark = landmarks.part(2)
+		right_cheek_mark = landmarks.part(14)
+		left_cheek_dist = sqrt((nose_tip_mark.x - left_cheek_mark.x)**2 + (nose_tip_mark.y - left_cheek_mark.y)**2)
+		right_cheek_dist = sqrt((nose_tip_mark.x - right_cheek_mark.x)**2 + (nose_tip_mark.y - right_cheek_mark.y)**2)
+		cheek_turn_ratio = left_cheek_dist/right_cheek_dist
+
+		if cheek_turn_ratio < 0.3:
+			cv2.putText(frame, "FACING LEFT", (50, 300), font, 2, (0, 0, 255), 3)
+		elif 0.3 <= cheek_turn_ratio <= 3.3:
+			cv2.putText(frame, "FACING CENTER", (50, 300), font, 2, (0, 0, 255), 3)
+		elif cheek_turn_ratio > 3.3:
+			cv2.putText(frame, "FACING RIGHT", (50, 300), font, 2, (0, 0, 255), 3)
+
+		cv2.putText(frame, str(cheek_turn_ratio), (50, 400), font, 2, (0, 0, 255), 3)
 
 
 	cv2.imshow("Frame", frame)
