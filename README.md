@@ -1,7 +1,7 @@
 # Gaze-Detection
 
 ## About
-The code is based on the Gaze controlled keyboard tutorials from PySource. I added face turn direction.
+The code is based on the Gaze controlled keyboard tutorials from PySource. It detects whether the pupils are looking left, center, or right. I added cheek turn direction which likewise tells whether the face is facing left, center, or right.
 
 ## Installation
 ```bash
