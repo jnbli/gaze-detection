@@ -17,10 +17,10 @@ python main.py
 ```
 
 ## What To Expect
-![Facing Forward](./eye_center_face_center.png)
-![Left Glean](./eye_left_face_center.png)
-![Blinking](./blinking.png)
-![Face Right](./eye_right_face_right.png)
+![Facing Forward](./img/eye_center_face_center.png)
+![Left Glean](./img/eye_left_face_center.png)
+![Blinking](./img/blinking.png)
+![Face Right](./img/eye_right_face_right.png)
 
 ## References
 For facial landmark points visit [OpenFace API Doc](https://openface-api.readthedocs.io/en/latest/openface.html).
